@@ -49,3 +49,19 @@ ggplot(diamonds, aes(x = clarity)) +
   ylab("Frequency")
 
 ```
+
+```{r interactions, echo= FALSE}
+ggplot(diamonds, aes(x = cut, y = color, color = clarity)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  ggtitle("Interaction of Cut and Color Across Different Clarities") +
+  ylab('Cuts') +
+  xlab('Colors')
+
+diamonds_model <- lm(price ~ cut * color * clarity, data = diamonds)
+summary(diamonds_model)
+
+diamonds_model_simple <- lm(price ~ cut + color + clarity, data = diamonds)
+anova(diamonds_model_simple, diamonds_model)
+
+```
