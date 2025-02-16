@@ -50,6 +50,8 @@ ggplot(diamonds, aes(x = clarity)) +
 
 ```
 
+Now Graph out them together. I did the same two model accuracy comparsion with anova test.
+
 ```{r interactions, echo= FALSE}
 ggplot(diamonds, aes(x = cut, y = color, color = clarity)) +
   geom_point() + 
@@ -65,3 +67,7 @@ diamonds_model_simple <- lm(price ~ cut + color + clarity, data = diamonds)
 anova(diamonds_model_simple, diamonds_model)
 
 ```
+
+The R-squared value is 0.09063, which means about 9.06% of the variation in prices is explained by the model. The p-value associated with this F-statistic is less than 2.2e-16, indicating that the model as a whole is statistically significant.
+
+The p-value in the results is extremely small, which strongly suggests that Model 2 (including the interactions) does a significantly better job at explaining the variations in diamond prices than Model 1.
