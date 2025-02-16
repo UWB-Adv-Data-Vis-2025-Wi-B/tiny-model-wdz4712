@@ -1,5 +1,5 @@
 ---
-title: "diamonds"
+title: "diamonds analysis"
 author: "Patrick Ng"
 date: "2025-02-16"
 output: html_document
@@ -19,22 +19,33 @@ data("diamonds", package = "ggplot2")
 names(diamonds)
 ```
 
-## R Markdown
+# What is the purpose? 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+In this report, we examine the relationship between diamonds' cut, color and clarity.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Let's look at them separately first.
 
-```{r cars}
-summary(cars)
+```{r cut, echo = FALSE}
+ggplot(diamonds, aes(x = cut)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Cuts") +
+  xlab("Cut") +
+  ylab("Frequency")
+```
+```{r color, echo = FALSE}
+ggplot(diamonds, aes(x = color)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Colors") +
+  xlab("Color") +
+  ylab("Frequency")
+
 ```
 
-## Including Plots
+```{r clarity, echo = FALSE}
+ggplot(diamonds, aes(x = clarity)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Clarity") +
+  xlab("Clarity") +
+  ylab("Frequency")
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
