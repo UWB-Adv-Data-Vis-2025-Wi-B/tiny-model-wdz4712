@@ -1,0 +1,73 @@
+---
+title: "diamonds analysis"
+author: "Patrick Ng"
+date: "2025-02-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library('tidyverse') ; library('ggplot2')
+```
+
+## Introduction
+
+This R Markdown document demonstrates my abilities to use models for data analysis using a data set collected on diamonds.
+
+```{r load data, include = FALSE}
+data("diamonds", package = "ggplot2")
+names(diamonds)
+```
+
+# What is the purpose? 
+
+In this report, we examine the relationship between diamonds' cut, color and clarity.
+
+Let's look at them separately first.
+
+```{r cut, echo = FALSE}
+ggplot(diamonds, aes(x = cut)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Cuts") +
+  xlab("Cut") +
+  ylab("Frequency")
+```
+```{r color, echo = FALSE}
+ggplot(diamonds, aes(x = color)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Colors") +
+  xlab("Color") +
+  ylab("Frequency")
+
+```
+
+```{r clarity, echo = FALSE}
+ggplot(diamonds, aes(x = clarity)) +
+  geom_bar() +
+  ggtitle("Distribution of Diamond Clarity") +
+  xlab("Clarity") +
+  ylab("Frequency")
+
+```
+
+Now Graph out them together. I did the same two model accuracy comparsion with anova test.
+
+```{r interactions, echo= FALSE}
+ggplot(diamonds, aes(x = cut, y = color, color = clarity)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  ggtitle("Interaction of Cut and Color Across Different Clarities") +
+  ylab('Cuts') +
+  xlab('Colors')
+
+diamonds_model <- lm(price ~ cut * color * clarity, data = diamonds)
+summary(diamonds_model)
+
+diamonds_model_simple <- lm(price ~ cut + color + clarity, data = diamonds)
+anova(diamonds_model_simple, diamonds_model)
+
+```
+
+The R-squared value is 0.09063, which means about 9.06% of the variation in prices is explained by the model. The p-value associated with this F-statistic is less than 2.2e-16, indicating that the model as a whole is statistically significant.
+
+The p-value in the results is extremely small, which strongly suggests that Model 2 (including the interactions) does a significantly better job at explaining the variations in diamond prices than Model 1.
